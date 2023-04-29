@@ -5,8 +5,10 @@ function mergesort(arr) {
     const mid = Math.floor(arr.length / 2)
     const leftArr = arr.slice(0, mid)
     const rightArr = arr.slice(mid)
-    
-    return merge(mergesort(leftArr), mergesort(rightArr))
+    const la = mergesort(leftArr);
+    const ra = mergesort(rightArr);
+    const sorted = merge(la, ra);
+    return sorted;
   }
   
   function merge(leftArr, rightArr) {
@@ -22,6 +24,6 @@ function mergesort(arr) {
     return resultArr
   }
   
-  const arr = [8, 20, -2, 4, -6]
+  const arr = [5,4,2,1]
   console.log(mergesort(arr)) // [-6, -2, 4, 8, 20]
   
