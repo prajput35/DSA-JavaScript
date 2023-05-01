@@ -231,42 +231,160 @@ class BinarySearchTree{
         return successor;
 
     }
+
+    breadthFirstSearch(){
+        let queue = [];
+        //let list = [];
+        queue.push(this.root);
+
+        while(queue.length){
+            let currentNode = queue.shift();
+            console.log(currentNode.value);
+            if(currentNode.left){
+                queue.push(currentNode.left);
+            }
+            if(currentNode.right){
+                queue.push(currentNode.right);
+            }
+        }
+    }
+
+    bfsRecursive(queue){
+        if(!queue.length){
+            return;
+        }
+
+        let currentNode = queue.shift(); //remove the first element of the list, FIFO satisfied.
+        console.log(currentNode.value);
+        if(currentNode.left){
+            queue.push(currentNode.left)
+        }
+        if(currentNode.right){
+            queue.push(currentNode.right);
+        }
+        return this.bfsRecursive(queue);
+    }
+
+    validateBST(){
+        let queue = [];
+        queue.push(this.root);
+
+        while(queue.length){
+            let currentNode = queue.shift();
+            //console.log(currentNode.value);
+            if(currentNode.left){
+                if(currentNode.left.value < currentNode.value){
+                    queue.push(currentNode.left);
+                }
+                else{
+                    return false;
+                }
+            }
+            if(currentNode.right){
+                if(currentNode.right.value > currentNode.value){
+                    queue.push(currentNode.right);
+                }else{
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    inOrder(node){
+        if(node){
+            this.inOrder(node.left);
+            console.log(node.value);
+            this.inOrder(node.right);
+        }
+    }
+
+    inOrderWithArr(node, arr){
+        if(node){
+            this.inOrderWithArr(node.left, arr);
+            //console.log(node.value);
+            arr.push(node.value);
+            this.inOrderWithArr(node.right, arr);
+        }
+        //return arr;
+    }
+
+    preOrder(node){
+        if(node){
+            console.log(node.value);
+            this.preOrder(node.left);
+            this.preOrder(node.right);
+        }
+    }
+
+    postOrder(node){
+        if(node){
+            this.postOrder(node.left);
+            this.postOrder(node.right);
+            console.log(node.value);
+        }
+    }
 }
 
 const bst = new BinarySearchTree();
 console.log('Tree is empty?',bst.isEmpty());
-//bst.insert(9);
-//bst.insert(4);
-//bst.insert(6);
-//bst.insert(20);
-//bst.insert(15);
-//bst.insert(170);
-//bst.insert(1);
-bst.insert(45);
-bst.insert(25);
-bst.insert(65);
-bst.insert(11);
-bst.insert(29);
-bst.insert(5);
+bst.insert(9);
+bst.insert(4);
+bst.insert(6);
+bst.insert(20);
 bst.insert(15);
-bst.insert(32);
-bst.insert(60);
-bst.insert(95);
-bst.insert(63);
-bst.insert(72);
-bst.insert(99);
-bst.insert(68);
-bst.insert(85);
-bst.insert(100);
-bst.insert(69);
+bst.insert(170);
+bst.insert(1);
 
-console.log(traverse(bst.root));
 
-console.log(bst.search(100));
-console.log('minimum value:',bst.min());
-console.log('maximum value:',bst.max());
-bst.remove(65);
-console.log(traverse(bst.root));
+//use below commented for remove, traverse, search
+// bst.insert(45);
+// bst.insert(25);
+// bst.insert(65);
+// bst.insert(11);
+// bst.insert(29);
+// bst.insert(5);
+// bst.insert(15);
+// bst.insert(32);
+// bst.insert(60);
+// bst.insert(95);
+// bst.insert(63);
+// bst.insert(72);
+// bst.insert(99);
+// bst.insert(68);
+// bst.insert(85);
+// bst.insert(100);
+// bst.insert(69);
+
+// console.log(traverse(bst.root));
+
+// console.log(bst.search(100));
+// console.log('minimum value:',bst.min());
+// console.log('maximum value:',bst.max());
+// //bst.remove(65);
+ console.log(traverse(bst.root));
+
+//breadth first search
+console.log('Breadth first search');
+bst.breadthFirstSearch();
+//bst.bfsRecursive([bst.root]);
+
+//depth first search
+console.log('Depth first search');
+let inOrderArr = [];
+//bst.inOrder(bst.root);
+console.log('InOrder');
+bst.inOrderWithArr(bst.root, inOrderArr);
+console.log(inOrderArr);
+console.log('PreOrder');
+bst.preOrder(bst.root);
+console.log('PostOrder');
+bst.postOrder(bst.root);
+
+console.clear();
+console.log('is bst:',bst.validateBST());
+
 
 function traverse(node) {
     const tree = { node: node.value };
